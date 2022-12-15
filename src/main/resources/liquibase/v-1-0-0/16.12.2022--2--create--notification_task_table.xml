@@ -11,7 +11,12 @@
 		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
 
-    <include file="liquibase/v-1-0-0/8.12.2022--1--create--notification_task_table.xml"/>
-    <include file="liquibase/v-1-0-0/16.12.2022--2--create--notification_task_table.xml"/>
-
+    <changeSet id="create index in data time" author="igor">
+<createIndex tableName="course_telegram_bot" indexName="data_time_index">
+    <column name="data_time_send_message"/>
+</createIndex>
+        <rollback>
+            <dropIndex tableName="course_telegram_bot" indexName="data_time_index"/>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
