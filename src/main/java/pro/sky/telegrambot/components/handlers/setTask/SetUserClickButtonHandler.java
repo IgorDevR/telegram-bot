@@ -7,23 +7,23 @@ import pro.sky.telegrambot.BotState.BotState;
 import pro.sky.telegrambot.components.handlers.InputMessageHandler;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Text;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 
 /**
  * Обработчик нажатия на кнопку добавить task
  */
 @Component()
 public class SetUserClickButtonHandler implements InputMessageHandler {
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
 
 
-    public SetUserClickButtonHandler(ReplyMessagesService replyMessagesService) {
-        this.replyMessagesService = replyMessagesService;
+    public SetUserClickButtonHandler(ReplyMessages replyMessages) {
+        this.replyMessages = replyMessages;
     }
 
     @Override
     public SendMessage startHandler(Message message) {
-        return replyMessagesService.successfulCommand(message, Text.replySetTaskText, Keyboards.KEYBOARD_CANCEL);
+        return replyMessages.successfulCommand(message, Text.replySetTaskText, Keyboards.KEYBOARD_CANCEL);
     }
 
     @Override

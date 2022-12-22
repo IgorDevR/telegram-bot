@@ -8,7 +8,7 @@ import pro.sky.telegrambot.components.handlers.InputMessageHandler;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.records.NotificationTaskRecords;
 import pro.sky.telegrambot.service.NotificationTaskService;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 
 import java.util.Collection;
 /**
@@ -18,11 +18,11 @@ import java.util.Collection;
 public class ShowAllUserClickButtonHandlerImpl implements InputMessageHandler {
 
     private final NotificationTaskService notificationTaskService;
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
 
-    public ShowAllUserClickButtonHandlerImpl(NotificationTaskService notificationTaskService, ReplyMessagesService replyMessagesService) {
+    public ShowAllUserClickButtonHandlerImpl(NotificationTaskService notificationTaskService, ReplyMessages replyMessages) {
         this.notificationTaskService = notificationTaskService;
-        this.replyMessagesService = replyMessagesService;
+        this.replyMessages = replyMessages;
     }
 
 
@@ -34,7 +34,7 @@ public class ShowAllUserClickButtonHandlerImpl implements InputMessageHandler {
         ntr.stream()
                 .forEachOrdered(n -> sb
                         .append(n.getTextMessage()).append("\n"));
-        return replyMessagesService.successfulCommand(message, sb.toString(), Keyboards.KEYBOARD_MAIN_MENU);
+        return replyMessages.successfulCommand(message, sb.toString(), Keyboards.KEYBOARD_MAIN_MENU);
 
     }
 

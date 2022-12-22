@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component;
 import pro.sky.telegrambot.BotState.BotState;
 import pro.sky.telegrambot.components.handlers.CheckInputDataAndTransferAndSendToService;
 import pro.sky.telegrambot.components.handlers.InputMessageHandler;
-import pro.sky.telegrambot.exceptions.TaskByIdNotFoundException;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Text;
 import pro.sky.telegrambot.service.NotificationTaskService;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,15 +24,15 @@ import java.util.regex.Matcher;
 @Slf4j
 public class SetWaitingTaskImpl extends CheckInputDataAndTransferAndSendToService implements InputMessageHandler {
     ;
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
     private final NotificationTaskService notificationTaskService;
 
     @Value("${regExr.setTask}")
     String regEx;
 
-    public SetWaitingTaskImpl(ReplyMessagesService replyMessagesService, NotificationTaskService notificationTaskService) {
+    public SetWaitingTaskImpl(ReplyMessages replyMessages, NotificationTaskService notificationTaskService) {
 
-        this.replyMessagesService = replyMessagesService;
+        this.replyMessages = replyMessages;
         this.notificationTaskService = notificationTaskService;
     }
 
@@ -44,11 +43,11 @@ public class SetWaitingTaskImpl extends CheckInputDataAndTransferAndSendToServic
             try {
                 interactionWithDb(message, regEx);
             } catch (RuntimeException e) {
-                return replyMessagesService.unknownAndErrorCommandMessage(message, Text.errorSetTaskFormatText, Keyboards.KEYBOARD_MAIN_MENU);
+                return replyMessages.unknownAndErrorCommandMessage(message, Text.errorSetTaskFormatText, Keyboards.KEYBOARD_MAIN_MENU);
             }
-            return replyMessagesService.successfulCommand(message, Text.taskSetSuccessfulText, Keyboards.KEYBOARD_MAIN_MENU);
+            return replyMessages.successfulCommand(message, Text.taskSetSuccessfulText, Keyboards.KEYBOARD_MAIN_MENU);
         }
-        return replyMessagesService.unknownAndErrorCommandMessage(message, Text.unknownReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
+        return replyMessages.unknownAndErrorCommandMessage(message, Text.unknownReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
     }
 
 

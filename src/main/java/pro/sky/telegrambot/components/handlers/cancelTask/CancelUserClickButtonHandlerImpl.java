@@ -7,7 +7,7 @@ import pro.sky.telegrambot.BotState.BotState;
 import pro.sky.telegrambot.components.handlers.InputMessageHandler;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Text;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 /**
  * Обработчик нажатия на кнопку отмена
  */
@@ -15,15 +15,15 @@ import pro.sky.telegrambot.service.ReplyMessagesService;
 public class CancelUserClickButtonHandlerImpl implements InputMessageHandler {
 
 
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
 
-    public CancelUserClickButtonHandlerImpl( ReplyMessagesService replyMessagesService) {
-        this.replyMessagesService = replyMessagesService;
+    public CancelUserClickButtonHandlerImpl( ReplyMessages replyMessages) {
+        this.replyMessages = replyMessages;
     }
 
     @Override
     public SendMessage startHandler(Message message) {
-        return replyMessagesService.successfulCommand(message, Text.cancelReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
+        return replyMessages.successfulCommand(message, Text.cancelReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
     }
 
     @Override

@@ -6,21 +6,21 @@ import org.springframework.stereotype.Component;
 import pro.sky.telegrambot.BotState.BotState;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Text;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 /**
  * Обработчик при запуске бота или команды /start
  */
 @Component
 public class StartUserClickHandlerImpl implements InputMessageHandler {
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
 
-    public StartUserClickHandlerImpl(ReplyMessagesService replyMessagesService) {
-        this.replyMessagesService = replyMessagesService;
+    public StartUserClickHandlerImpl(ReplyMessages replyMessages) {
+        this.replyMessages = replyMessages;
     }
 
     @Override
     public SendMessage startHandler(Message message) {
-        return replyMessagesService.successfulCommand(message, Text.startGreetingsText, Keyboards.KEYBOARD_MAIN_MENU).replyMarkup(Keyboards.KEYBOARD_MAIN_MENU);
+        return replyMessages.successfulCommand(message, Text.startGreetingsText, Keyboards.KEYBOARD_MAIN_MENU).replyMarkup(Keyboards.KEYBOARD_MAIN_MENU);
     }
 
     @Override

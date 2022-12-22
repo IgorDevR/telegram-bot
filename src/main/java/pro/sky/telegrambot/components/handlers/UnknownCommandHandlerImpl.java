@@ -6,22 +6,22 @@ import org.springframework.stereotype.Component;
 import pro.sky.telegrambot.BotState.BotState;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Text;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 /**
  * Обработчик неизвестной команды команды, когда другие команды не определеныы.
  */
 @Component
 public class UnknownCommandHandlerImpl implements InputMessageHandler {
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
 
-    public UnknownCommandHandlerImpl(ReplyMessagesService replyMessagesService) {
-        this.replyMessagesService = replyMessagesService;
+    public UnknownCommandHandlerImpl(ReplyMessages replyMessages) {
+        this.replyMessages = replyMessages;
     }
 
     @Override
     public SendMessage startHandler(Message message) {
 
-     return  replyMessagesService.unknownAndErrorCommandMessage(message, Text.unknownReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
+     return  replyMessages.unknownAndErrorCommandMessage(message, Text.unknownReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
     }
 
     @Override

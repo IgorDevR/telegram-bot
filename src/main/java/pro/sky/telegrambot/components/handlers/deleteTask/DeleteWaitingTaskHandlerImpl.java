@@ -14,7 +14,7 @@ import pro.sky.telegrambot.exceptions.TaskByIdNotFoundException;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Keyboards;
 import pro.sky.telegrambot.keyboardAndButtonsAndText.Text;
 import pro.sky.telegrambot.service.NotificationTaskService;
-import pro.sky.telegrambot.service.ReplyMessagesService;
+import pro.sky.telegrambot.ReplyMessages;
 
 /**
  * Обработчик удаления по id, взаимодействует с сервисом. Состояние меняется после нажаия на кнопку удалиить и после статуса DELETE_USER_CLICK_BUTTON
@@ -24,12 +24,12 @@ import pro.sky.telegrambot.service.ReplyMessagesService;
 public class DeleteWaitingTaskHandlerImpl extends CheckInputDataAndTransferAndSendToService implements InputMessageHandler {
 
 
-    private final ReplyMessagesService replyMessagesService;
+    private final ReplyMessages replyMessages;
     private final NotificationTaskService notificationTaskService;
 
-    public DeleteWaitingTaskHandlerImpl(ReplyMessagesService replyMessagesService, NotificationTaskService notificationTaskService) {
+    public DeleteWaitingTaskHandlerImpl(ReplyMessages replyMessages, NotificationTaskService notificationTaskService) {
 
-        this.replyMessagesService = replyMessagesService;
+        this.replyMessages = replyMessages;
         this.notificationTaskService = notificationTaskService;
     }
 
@@ -44,12 +44,12 @@ public class DeleteWaitingTaskHandlerImpl extends CheckInputDataAndTransferAndSe
                 interactionWithDb(message, regEx);
             } catch (TaskByIdNotFoundException e) {
                 log.error(Text.errorDeleteByIdText);
-                return replyMessagesService.unknownAndErrorCommandMessage(message, Text.errorDeleteByIdText, Keyboards.KEYBOARD_MAIN_MENU);
+                return replyMessages.unknownAndErrorCommandMessage(message, Text.errorDeleteByIdText, Keyboards.KEYBOARD_MAIN_MENU);
             }
-            return replyMessagesService.successfulCommand(message, Text.taskSuccessfullyDeleteText, Keyboards.KEYBOARD_MAIN_MENU);
+            return replyMessages.successfulCommand(message, Text.taskSuccessfullyDeleteText, Keyboards.KEYBOARD_MAIN_MENU);
         }
 
-        return replyMessagesService.unknownAndErrorCommandMessage(message, Text.unknownReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
+        return replyMessages.unknownAndErrorCommandMessage(message, Text.unknownReturnMainMenuText, Keyboards.KEYBOARD_MAIN_MENU);
     }
 
 
