@@ -6,6 +6,7 @@ import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
+import liquibase.pro.packaged.E;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -39,17 +40,22 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     @Override
     public int process(List<Update> updates) {
-        updates.forEach(update -> {
-            Message message = update.message();
-            logger.info("New message from User:{}, chatId: {},  with text: {}",
-                    message.from().username(), message.from().id(), message.text());
+        try {
+            updates.forEach(update -> {
+                Message message = update.message();
+                logger.info("New message from User:{}, chatId: {},  with text: {}",
+                        message.from().username(), message.from().id(), message.text());
 //идем в основной обрабоччик
-            SendMessage replyMessage = mainHandler.handleUpdate(update);
+                SendMessage replyMessage = mainHandler.handleUpdate(update);
 //отправляем готовое сообщение
-            sendReplyMessage(replyMessage);
+                sendReplyMessage(replyMessage);
 
-        });
-        return UpdatesListener.CONFIRMED_UPDATES_ALL;
+            });
+
+        } finally {
+            return UpdatesListener.CONFIRMED_UPDATES_ALL;
+
+        }
     }
 
     private void sendReplyMessage(SendMessage replyMessage) {

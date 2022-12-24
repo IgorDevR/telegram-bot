@@ -13,10 +13,10 @@
 
     <changeSet id="create new table" author="igor">
         <createTable tableName="course_telegram_bot">
-            <column name="id" type="serial" autoIncrement="true" remarks="identification">
+            <column name="id" type="bigserial" autoIncrement="true" remarks="identification">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="chat_id" type="serial" remarks="number chat id telegram for send message">
+            <column name="chat_id" type="bigserial" remarks="number chat id telegram for send message">
                 <constraints nullable="false"/>
             </column>
             <column name="text_message" type="text" remarks="text sending message"/>
